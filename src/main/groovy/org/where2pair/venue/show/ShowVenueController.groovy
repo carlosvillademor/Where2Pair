@@ -12,18 +12,15 @@ class ShowVenueController {
     def show(long id) {
         Venue venue = venueRepository.get(id)
 
-        if (venue) {
-            Map venueJson = venueJsonMarshaller.asVenueJson(venue)
-            return venueJson
-        } else {
+        if (!venue) {
             return new ErrorResponse(message: "Venue with id $id could not be found", status: 404)
         }
+        return venueJsonMarshaller.asVenueJson(venue)
     }
 
     def showAll() {
         List venues = venueRepository.getAll()
-        List venuesJson = venueJsonMarshaller.asVenuesJson(venues)
-        venuesJson
+        return venueJsonMarshaller.asVenuesJson(venues)
     }
 
 }
